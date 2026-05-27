@@ -9,15 +9,26 @@ import Pagination from "@/components/Pagination";
 import { getPosts } from "@/lib/wp";
 import { Metadata } from "next";
 
-// SEO
-export const metadata: Metadata = {
-  alternates: {
-    canonical: "https://www.codigowp.net/blog",
-  },
-};
+interface BlogSubPageProps {
+  params: Promise<{
+    pageNumber: string;
+  }>;
+}
 
-export default async function Blog() {
-  const currentPage = 1; // Página inicial fixa
+export async function generateMetadata({
+  params,
+}: BlogSubPageProps): Promise<Metadata> {
+  const routeParams = await params;
+  return {
+    alternates: {
+      canonical: `https://www.codigowp.net/blog/page/${routeParams.pageNumber}`,
+    },
+  };
+}
+
+export default async function BlogSubPage({ params }: BlogSubPageProps) {
+  const routeParams = await params;
+  const currentPage = Number(routeParams.pageNumber) || 1;
   const postsPerPage = 6;
 
   const { posts, total } = await getPosts(currentPage, postsPerPage);
@@ -27,7 +38,7 @@ export default async function Blog() {
   return (
     <main className="max-w-6xl mx-auto blog py-12 px-6">
       <h1 className="text-4xl font-serif font-bold text-gray-900 mb-10">
-        Blog
+        Blog - Página {currentPage}
       </h1>
       <div className="flex gap-8">
         <div className="w-3/4 flex flex-col gap-16">

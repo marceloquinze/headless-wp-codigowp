@@ -1,69 +1,36 @@
 export interface Curso {
-	title: string;
-	slug: string;
-	codigowpCourseDuration: string;
-	codigowpCourseLink: string;
-	codigowpIsUdemy: boolean;
-	codigowpNumStudents: number;
-	codigowpSalePrice: string;
-	codigowpRegularPrice: string;
+  title: string;
+  slug: string;
+  codigowpCourseDuration: string;
+  codigowpCourseLink: string;
+  codigowpIsUdemy: boolean;
+  codigowpNumStudents: number;
+  codigowpSalePrice: string;
+  codigowpRegularPrice: string;
 }
 
 export interface GetCursosResponse {
-	cursos: {
-		nodes: Curso[];
-	}
+  cursos: {
+    nodes: Curso[];
+  };
 }
 
 // Menus
 
 export interface MenuItem {
-	label: string;
-	uri: string;
+  label: string;
+  uri: string;
 }
 
 export interface GetMenuResponse {
-	menu: {
-		menuItems: {
-			nodes: MenuItem[];
-		}
-	}
+  menu: {
+    menuItems: {
+      nodes: MenuItem[];
+    };
+  };
 }
 
 // Posts
-
-// export interface PostListItem {
-// 	title: string;
-// 	slug: string;
-// 	excerpt: string;
-// 	date: string;
-// 	author: {
-// 		node: {
-// 			name: string;
-// 		}
-// 	};
-// 	featuredImage?: {
-// 		node: {
-// 			sourceUrl: string;
-// 		}
-// 	};
-// 	commentCount: number;
-// 	categories: {
-// 		nodes: {
-// 			name: string;
-// 			slug: string;
-// 		}[]
-// 	};
-// }
-
-// export interface GetPostResponse {
-// 	posts: {
-// 		nodes: PostListItem[];
-// 	}
-// }
-
-
-// Posts 
 
 export interface RawPostNode {
   title: string;
@@ -86,6 +53,12 @@ export interface RawPostNode {
 export interface RawGetPostsResponse {
   posts: {
     nodes: RawPostNode[];
+    pageInfo: {
+      offsetPagination: {
+        total: number;
+        hasMore: boolean;
+      };
+    };
   };
 }
 
@@ -99,6 +72,12 @@ export interface CleanPost {
   authorName: string;
   categories: { name: string; slug: string }[];
   featuredImage: string | null;
+}
+
+export interface PaginatedPosts {
+  posts: CleanPost[];
+  total: number;
+  hasMore: boolean;
 }
 
 // Posts by slug
