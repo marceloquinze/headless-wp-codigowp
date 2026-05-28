@@ -1,3 +1,4 @@
+// 1 Cursos
 export interface Curso {
   title: string;
   slug: string;
@@ -15,8 +16,7 @@ export interface GetCursosResponse {
   };
 }
 
-// Menus
-
+// 2 Menus
 export interface MenuItem {
   label: string;
   uri: string;
@@ -30,8 +30,7 @@ export interface GetMenuResponse {
   };
 }
 
-// Posts
-
+// 3 Posts
 export interface RawPostNode {
   title: string;
   slug: string;
@@ -47,6 +46,23 @@ export interface RawPostNode {
   };
   featuredImage?: {
     node: { sourceUrl: string };
+  };
+  // Comments
+  databaseId?: number;
+  commentStatus?: "open" | "closed";
+  comments?: {
+    nodes: {
+      databaseId: number;
+      content: string;
+      date: string;
+      parentDatabaseId: number | null;
+      author: {
+        node: {
+          name: string;
+          url: string | null;
+        };
+      };
+    }[];
   };
 }
 
@@ -72,15 +88,31 @@ export interface CleanPost {
   authorName: string;
   categories: { name: string; slug: string }[];
   featuredImage: string | null;
-}
-
-export interface PaginatedPosts {
-  posts: CleanPost[];
-  total: number;
-  hasMore: boolean;
+  // Comments
+  commentStatus: "open" | "closed";
+  databaseId: number;
+  comments: {
+    databaseId: number;
+    content: string;
+    date: string;
+    parentDatabaseId: number | null;
+    author: {
+      node: {
+        name: string;
+        url: string | null;
+      };
+    };
+  }[];
 }
 
 // Posts by slug
 export interface RawGetPostBySlugResponse {
   post: RawPostNode | null;
+}
+
+// Paginated posts
+export interface PaginatedPosts {
+  posts: CleanPost[];
+  total: number;
+  hasMore: boolean;
 }

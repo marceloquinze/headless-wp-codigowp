@@ -7,7 +7,6 @@ import {
   RawGetPostBySlugResponse,
   PaginatedPosts,
 } from "@/types/wp";
-import { isBefore } from "date-fns";
 
 const endpoint = process.env.NEXT_PUBLIC_WORDPRESS_API_URL as string;
 
@@ -119,6 +118,10 @@ export async function getPosts(
     authorName: post.author?.node?.name || "Autor Desconhecido",
     categories: post.categories?.nodes || [],
     featuredImage: post.featuredImage?.node?.sourceUrl || null,
+    // check this
+    commentStatus: post.commentStatus || "closed",
+    databaseId: post.databaseId || 0,
+    comments: post.comments?.nodes || [],
   }));
 
   return {
@@ -133,11 +136,14 @@ export async function getPostBySlug(slug: string): Promise<CleanPost | null> {
   const query = gql`
     query GetPostBySlug($id: ID!) {
       post(id: $id, idType: SLUG) {
+        databaseId
         title
         slug
         content
+        excerpt
         date
         commentCount
+        commentStatus
         author {
           node {
             name
@@ -156,6 +162,21 @@ export async function getPostBySlug(slug: string): Promise<CleanPost | null> {
         featuredImage {
           node {
             sourceUrl
+          }
+        }
+        # Comments
+        comments(where: { orderby: COMMENT_DATE_GMT, order: ASC }, first: 100) {
+          nodes {
+            databaseId
+            content
+            date
+            parentDatabaseId
+            author {
+              node {
+                name
+                url
+              }
+            }
           }
         }
       }
@@ -178,5 +199,55 @@ export async function getPostBySlug(slug: string): Promise<CleanPost | null> {
     authorName: data.post.author?.node?.name || "Sem Autor",
     categories: data.post.categories?.nodes || [],
     featuredImage: data.post.featuredImage?.node?.sourceUrl || null,
+    // Comments
+    databaseId: data.post.databaseId || 0,
+    commentStatus: data.post.commentStatus || "closed",
+    comments: data.post.comments?.nodes || [],
   };
+}
+
+// Mutations
+
+export async function createComment(input: {
+  commentOn: number; // ID do Post
+  parent?: number; // ID do Comentário Pai (opcional)
+  content: string; // Texto do comentário
+  authorName: string; // Nome do Autor
+  authorEmail: string; // E-mail do Autor
+}): Promise<{ success: boolean; message: string }> {
+  const mutation = gql`
+    mutation CreateComment($input: CreateCommentInput!) {
+      createComment(input: $input) {
+        success
+        comment {
+          databaseId
+          approved
+        }
+      }
+    }
+  `;
+
+  try {
+    const data = await wpClient.request<any>(mutation, { input });
+
+    if (data?.createComment?.success) {
+      const isApproved = data.createComment.comment.approved;
+      return {
+        success: true,
+        message: isApproved
+          ? "Comentário publicado com sucesso!"
+          : "Comentário enviado com sucesso! Ele aparecerá aqui assim que for aprovado pelo moderador.",
+      };
+    }
+
+    return {
+      success: false,
+      message: "Não foi possível processar o comentário.",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Erro de conexão com o servidor de comentários.",
+    };
+  }
 }
