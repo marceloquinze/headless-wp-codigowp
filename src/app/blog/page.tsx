@@ -8,6 +8,7 @@ import PostMetaInfo from "@/components/PostMetaInfo";
 import Pagination from "@/components/Pagination";
 import { getPosts } from "@/lib/wp";
 import { Metadata } from "next";
+import Sidebar from "@/components/Sidebar";
 
 // SEO
 export const metadata: Metadata = {
@@ -74,7 +75,9 @@ export default async function Blog() {
             </article>
           ))}
         </div>
-        <div className="w-1/4">Sidebar</div>
+        <div className="w-1/4">
+          <Sidebar />
+        </div>
       </div>
 
       <Pagination currentPage={currentPage} totalPages={totalPages} />

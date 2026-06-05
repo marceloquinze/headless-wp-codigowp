@@ -4,11 +4,14 @@ import Image from "next/image";
 
 interface CoursesProp {
   cursos: CleanCurso[];
+  isNotSidebar: boolean;
 }
 
-export default function CourseCard({ cursos }: CoursesProp) {
+export default function CourseCard({ cursos, isNotSidebar }: CoursesProp) {
   return (
-    <div className="flex flex-wrap flex-col md:flex-row justify-center gap-6">
+    <div
+      className={`flex flex-wrap ${isNotSidebar ? "flex-col md:flex-row" : "flex-col"} justify-center gap-6`}
+    >
       {cursos
         .filter((curso) => curso.status === "publish")
         .filter((curso) =>

@@ -14,7 +14,7 @@ export default async function Cursos() {
           Veja como posso te ajudar a deslanchar sua carreira profissional
         </p>
       </div>
-      <CourseCard cursos={cursos} />
+      <CourseCard cursos={cursos} isNotSidebar />
     </main>
   );
 }
