@@ -17,7 +17,6 @@ interface CommentFormProps {
 }
 
 export default function CommentForm({
-  postId,
   replyTarget,
   onCancelReply,
   onSubmitComment,
@@ -31,7 +30,7 @@ export default function CommentForm({
     message: string;
   }>({ type: "idle", message: "" });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
     setStatus({ type: "loading", message: "" });
 

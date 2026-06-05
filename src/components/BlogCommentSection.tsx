@@ -9,7 +9,12 @@ interface BlogCommentSectionProps {
   postId: number;
   commentStatus: "open" | "closed";
   comments: CleanPost["comments"];
-  submitAction: any;
+  submitAction: (formData: {
+    name: string;
+    email: string;
+    content: string;
+    parentId?: number;
+  }) => Promise<{ success: boolean; message: string }>;
 }
 
 export default function BlogCommentSection({

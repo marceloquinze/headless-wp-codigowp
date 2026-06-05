@@ -7,6 +7,7 @@ import parse from "html-react-parser";
 import DOMPurify from "isomorphic-dompurify";
 import { notFound } from "next/navigation";
 
+// using App Router, Next passes URL params as a Promise
 interface PostPageProps {
   params: Promise<{
     slug: string;
@@ -14,14 +15,18 @@ interface PostPageProps {
 }
 
 export default async function PostPage({ params }: PostPageProps) {
+  // this is how we get the URL params, especially the slug
+  // this comes from 'params'
   const { slug } = await params;
+  // now, slug is used to get the post data from GraphQL
   const post = await getPostBySlug(slug);
-  console.log(post);
+  // console.log(post);
 
   if (!post) {
     notFound();
   }
 
+  // Server action for comments
   const handleCommentSubmit = async (formData: {
     name: string;
     email: string;
@@ -29,6 +34,7 @@ export default async function PostPage({ params }: PostPageProps) {
     parentId?: number;
   }) => {
     "use server";
+    // calls createComment from wp.ts
     return await createComment({
       commentOn: post.databaseId,
       parent: formData.parentId,

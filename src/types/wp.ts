@@ -31,6 +31,8 @@ export interface GetMenuResponse {
 }
 
 // 3 Posts
+// Flattens post data - according to the GraphQL query
+// helps getting the data from GraphQL in the getPostBySlug function
 export interface RawPostNode {
   title: string;
   slug: string;
@@ -55,7 +57,7 @@ export interface RawPostNode {
       databaseId: number;
       content: string;
       date: string;
-      parentDatabaseId: number | null;
+      parentDatabaseId: number | 0;
       author: {
         node: {
           name: string;
@@ -78,6 +80,9 @@ export interface RawGetPostsResponse {
   };
 }
 
+// removes nodes, but not a singular 'node'
+// helps translating the data from the RawPostNode type to the CleanPost type
+// see the getPostBySlug function
 export interface CleanPost {
   title: string;
   slug: string;
@@ -95,7 +100,7 @@ export interface CleanPost {
     databaseId: number;
     content: string;
     date: string;
-    parentDatabaseId: number | null;
+    parentDatabaseId: number | 0;
     author: {
       node: {
         name: string;
@@ -106,7 +111,10 @@ export interface CleanPost {
 }
 
 // Posts by slug
+// helps getting the data from GraphQL in the getPostBySlug function
+// since it is a wrapper of RawPostNode
 export interface RawGetPostBySlugResponse {
+  // each post is of type RawPostNode
   post: RawPostNode | null;
 }
 
@@ -115,4 +123,20 @@ export interface PaginatedPosts {
   posts: CleanPost[];
   total: number;
   hasMore: boolean;
+}
+
+// Comments Mutation
+export interface CreateCommentInput {
+  createComment: {
+    success: boolean;
+    comment: {
+      databaseId: number;
+      status: "approved" | "hold" | "spam" | "trash";
+    };
+  };
+  commentOn: number; // ID do Post
+  parent?: number; // ID do Comentário Pai (opcional)
+  content: string; // Texto do comentário
+  author: string; // Nome do Autor
+  authorEmail: string; // E-mail do Autor
 }

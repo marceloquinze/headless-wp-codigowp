@@ -6,6 +6,7 @@ import {
   CleanPost,
   RawGetPostBySlugResponse,
   PaginatedPosts,
+  CreateCommentInput,
 } from "@/types/wp";
 
 const endpoint = process.env.NEXT_PUBLIC_WORDPRESS_API_URL as string;
@@ -132,7 +133,9 @@ export async function getPosts(
 }
 
 // Get posts by slug
+// Translates the data from the RawPostNode type to the CleanPost type
 export async function getPostBySlug(slug: string): Promise<CleanPost | null> {
+  // slug comes from the folder name and, consequently, from the URL parameters
   const query = gql`
     query GetPostBySlug($id: ID!) {
       post(id: $id, idType: SLUG) {
@@ -165,7 +168,10 @@ export async function getPostBySlug(slug: string): Promise<CleanPost | null> {
           }
         }
         # Comments
-        comments(where: { orderby: COMMENT_DATE_GMT, order: ASC }, first: 100) {
+        comments(
+          where: { orderby: COMMENT_DATE_GMT, order: DESC }
+          first: 100
+        ) {
           nodes {
             databaseId
             content
@@ -183,13 +189,18 @@ export async function getPostBySlug(slug: string): Promise<CleanPost | null> {
     }
   `;
 
+  // Just fetches data from the API
+  // the request if of type RawGetPostBySlugResponse (RawPostNode)
+  // used as reference, not to lie to typescript
   const data = await wpClient.request<RawGetPostBySlugResponse>(query, {
     id: slug,
+    // just like we do in the GraphiQL interface
   });
 
   if (!data.post) return null;
 
-  return {
+  // Mapping from RawPostNode to CleanPost
+  const cleanPost: CleanPost = {
     title: data.post.title,
     slug: data.post.slug,
     excerpt: data.post.excerpt,
@@ -204,6 +215,8 @@ export async function getPostBySlug(slug: string): Promise<CleanPost | null> {
     commentStatus: data.post.commentStatus || "closed",
     comments: data.post.comments?.nodes || [],
   };
+
+  return cleanPost;
 }
 
 // Mutations
@@ -221,22 +234,33 @@ export async function createComment(input: {
         success
         comment {
           databaseId
-          approved
+          status
         }
       }
     }
   `;
 
+  const graphQLInput = {
+    commentOn: input.commentOn,
+    parent: input.parent,
+    content: input.content,
+    author: input.authorName,
+    authorEmail: input.authorEmail,
+  };
+
   try {
-    const data = await wpClient.request<any>(mutation, { input });
+    const data = await wpClient.request<CreateCommentInput>(mutation, {
+      input: graphQLInput,
+    });
 
     if (data?.createComment?.success) {
-      const isApproved = data.createComment.comment.approved;
+      const isApproved = data.createComment.comment?.status === "approved";
       return {
         success: true,
-        message: isApproved
-          ? "Comentário publicado com sucesso!"
-          : "Comentário enviado com sucesso! Ele aparecerá aqui assim que for aprovado pelo moderador.",
+        message:
+          isApproved === true
+            ? "Comentário publicado com sucesso!"
+            : "Comentário enviado com sucesso! Ele aparecerá aqui assim que for aprovado pelo moderador.",
       };
     }
 
@@ -245,6 +269,7 @@ export async function createComment(input: {
       message: "Não foi possível processar o comentário.",
     };
   } catch (error) {
+    console.error("Erro na Mutation de Comentário:", error);
     return {
       success: false,
       message: "Erro de conexão com o servidor de comentários.",
