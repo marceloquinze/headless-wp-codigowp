@@ -36,7 +36,7 @@ export default async function BlogSubPage({ params }: BlogSubPageProps) {
   const totalPages = Math.ceil(total / postsPerPage);
 
   return (
-    <main className="max-w-6xl mx-auto blog py-12 px-6">
+    <main className="max-w-7xl mx-auto blog py-12 px-6">
       <h1 className="text-4xl font-serif font-bold text-gray-900 mb-10">
         Blog - Página {currentPage}
       </h1>

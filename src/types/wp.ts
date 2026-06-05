@@ -1,19 +1,50 @@
 // 1 Cursos
-export interface Curso {
+export interface RawCurso {
   title: string;
   slug: string;
+  status: string;
+  categories?: {
+    nodes: { name: string; slug: string }[];
+  };
+  featuredImage?: {
+    node: { sourceUrl: string };
+  };
   codigowpCourseDuration: string;
+  codigowpCourseId: string;
+  codigowpCourseLevel: string;
   codigowpCourseLink: string;
   codigowpIsUdemy: boolean;
+  codigowpNewCourse: boolean;
   codigowpNumStudents: number;
-  codigowpSalePrice: string;
   codigowpRegularPrice: string;
+  codigowpSalePrice: string;
+}
+
+export interface RawGetCursosResponse {
+  cursos: {
+    nodes: RawCurso[];
+  };
+}
+
+export interface CleanCurso {
+  title: string;
+  slug: string;
+  status: string;
+  categories: { name: string; slug: string }[];
+  featuredImage: string | null;
+  duration: string;
+  id: string;
+  level: string;
+  link: string;
+  isUdemy: boolean;
+  isNew: boolean;
+  numStudents: number;
+  regularPrice: string;
+  salesPrice: string;
 }
 
 export interface GetCursosResponse {
-  cursos: {
-    nodes: Curso[];
-  };
+  cursos: CleanCurso[];
 }
 
 // 2 Menus

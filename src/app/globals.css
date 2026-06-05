@@ -45,7 +45,45 @@ h2{
   @apply font-serif text-2xl leading-normal
 }
 
+h3{
+  @apply font-serif text-xl leading-normal
+}
+
+h4{
+  @apply font-serif text-lg leading-normal
+}
+
 /* Components */
+
+/* Courses Card */
+.course-meta{
+  position: relative;
+}
+
+.course-meta::before {
+    content: '';
+    width: 30px;
+    height: 3px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    background: #000;
+    z-index: 10;
+    background-color: #d6d604;
+}
+
+.course-meta::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 1px;
+    height: 1px;
+    width: 100%;
+    background: #e5e5e5;
+}
 
 /* DataBox */
 .simple-date {

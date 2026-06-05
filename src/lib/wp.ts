@@ -1,12 +1,13 @@
 import { GraphQLClient, gql } from "graphql-request";
 import {
-  GetCursosResponse,
+  RawGetCursosResponse,
   GetMenuResponse,
   RawGetPostsResponse,
   CleanPost,
   RawGetPostBySlugResponse,
   PaginatedPosts,
   CreateCommentInput,
+  GetCursosResponse,
 } from "@/types/wp";
 
 const endpoint = process.env.NEXT_PUBLIC_WORDPRESS_API_URL as string;
@@ -19,16 +20,29 @@ export const wpClient = new GraphQLClient(endpoint);
 
 // Get only courses data
 export async function getCursos(): Promise<GetCursosResponse> {
+  // the promise above represents what the function really returns (a GetCursosResponse type format)
   const query = gql`
     query GetCursosComMeta {
       cursos {
         nodes {
           title
           slug
+          status
+          categories {
+            nodes {
+              name
+              slug
+            }
+          }
+          featuredImage {
+            node {
+              sourceUrl
+            }
+          }
           codigowpCourseDuration
-          codigowpCourseLink
           codigowpCourseId
           codigowpCourseLevel
+          codigowpCourseLink
           codigowpIsUdemy
           codigowpNewCourse
           codigowpNumStudents
@@ -39,7 +53,28 @@ export async function getCursos(): Promise<GetCursosResponse> {
     }
   `;
 
-  return await wpClient.request<GetCursosResponse>(query);
+  // real WordPress API response (using RawGetCursosResponse as reference)
+  const data = await wpClient.request<RawGetCursosResponse>(query);
+  const cursos = data.cursos.nodes.map((curso) => ({
+    title: curso.title,
+    slug: curso.slug,
+    status: curso.status,
+    categories: curso.categories?.nodes || [],
+    featuredImage: curso.featuredImage?.node.sourceUrl || null,
+    duration: curso.codigowpCourseDuration,
+    id: curso.codigowpCourseId,
+    level: curso.codigowpCourseLevel,
+    link: curso.codigowpCourseLink,
+    isUdemy: curso.codigowpIsUdemy,
+    isNew: curso.codigowpNewCourse,
+    numStudents: curso.codigowpNumStudents,
+    regularPrice: curso.codigowpRegularPrice,
+    salesPrice: curso.codigowpSalePrice,
+  }));
+
+  return {
+    cursos,
+  };
 }
 
 // Get only menu data

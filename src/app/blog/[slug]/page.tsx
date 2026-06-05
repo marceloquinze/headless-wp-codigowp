@@ -45,7 +45,7 @@ export default async function PostPage({ params }: PostPageProps) {
   };
 
   return (
-    <main className="max-w-6xl mx-auto py-12 px-6">
+    <main className="max-w-7xl mx-auto py-12 px-6">
       <div className="flex gap-8">
         <div className="w-3/4 flex flex-col gap-4">
           <div className="flex flex-col gap-2">
