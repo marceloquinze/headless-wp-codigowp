@@ -6,6 +6,7 @@ import Image from "next/image";
 import parse from "html-react-parser";
 import DOMPurify from "isomorphic-dompurify";
 import { notFound } from "next/navigation";
+import Sidebar from "@/components/Sidebar";
 
 // using App Router, Next passes URL params as a Promise
 interface PostPageProps {
@@ -96,7 +97,9 @@ export default async function PostPage({ params }: PostPageProps) {
             submitAction={handleCommentSubmit}
           />
         </div>
-        <div className="w-1/4">Sidebar</div>
+        <div className="w-1/4">
+          <Sidebar />
+        </div>
       </div>
     </main>
   );
