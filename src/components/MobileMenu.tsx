@@ -78,7 +78,7 @@ export default function MobileMenu({ menuItems }: { menuItems: MenuItem[] }) {
           />
         </svg>
       </summary>
-      <div className="absolute right-0 mt-2 w-full bg-white shadow-lg rounded-md py-2 z-50">
+      <div className="absolute right-0 w-full bg-white shadow-lg py-2 z-50 max-h-screen overflow-y-auto">
         {buildMenu(menuItems)}
       </div>
     </details>

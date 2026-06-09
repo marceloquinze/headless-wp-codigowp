@@ -20,7 +20,7 @@ export default async function Header() {
         className={`${
           level === 0
             ? "flex gap-3"
-            : "absolute left-0 top-full min-w-50 bg-white shadow-lg rounded-md py-2"
+            : "absolute left-0 top-full min-w-max bg-white shadow-lg rounded-md py-2"
         }`}
       >
         {currentLevelItems.map((item) => {
@@ -58,7 +58,7 @@ export default async function Header() {
 
               {hasChildren && (
                 <div className="hidden group-hover:block focus-within:block absolute left-0 top-full">
-                  <div className="bg-white shadow-lg rounded-md min-w-90 py-2 mt-0">
+                  <div className="bg-white shadow-lg rounded-md min-w-max py-2 mt-0">
                     {buildMenu(item.databaseId, level + 1)}
                   </div>
                 </div>
