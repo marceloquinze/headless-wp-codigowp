@@ -65,7 +65,7 @@ export default function CourseCard({ cursos, isNotSidebar }: CoursesProp) {
                   // sidebar: fill = false, width 400, height 300
                   // not sidebar: fill = true, width undefined, height undefined
                   priority={true}
-                  className="object-cover"
+                  className="object-cover w-full"
                 />
               </div>
             )}

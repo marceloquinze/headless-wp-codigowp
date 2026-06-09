@@ -47,8 +47,8 @@ export default async function PostPage({ params }: PostPageProps) {
 
   return (
     <main className="max-w-7xl mx-auto py-12 px-6">
-      <div className="flex gap-8">
-        <div className="w-3/4 flex flex-col gap-4">
+      <div className="flex flex-wrap md:flex-nowrap gap-8">
+        <div className="md:w-3/4 flex flex-col gap-16">
           <div className="flex flex-col gap-2">
             <h1 className="text-4xl font-bold text-gray-950 leading-tight">
               {post.title}
@@ -97,7 +97,7 @@ export default async function PostPage({ params }: PostPageProps) {
             submitAction={handleCommentSubmit}
           />
         </div>
-        <div className="w-1/4">
+        <div className="w-full md:w-1/4">
           <Sidebar />
         </div>
       </div>

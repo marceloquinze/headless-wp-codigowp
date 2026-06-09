@@ -30,8 +30,8 @@ export default async function Blog() {
       <h1 className="text-4xl font-serif font-bold text-gray-900 mb-10">
         Blog
       </h1>
-      <div className="flex gap-8">
-        <div className="w-3/4 flex flex-col gap-16">
+      <div className="flex flex-wrap md:flex-nowrap gap-8">
+        <div className="md:w-3/4 flex flex-col gap-16">
           {posts.map((post) => (
             <article key={post.slug} className="flex flex-col gap-8 group">
               <Link
@@ -75,7 +75,7 @@ export default async function Blog() {
             </article>
           ))}
         </div>
-        <div className="w-1/4">
+        <div className="w-full md:w-1/4">
           <Sidebar />
         </div>
       </div>
