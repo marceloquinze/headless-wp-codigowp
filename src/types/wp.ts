@@ -51,6 +51,11 @@ export interface GetCursosResponse {
 export interface MenuItem {
   label: string;
   uri: string;
+  databaseId: number;
+  parentDatabaseId: number;
+  childItems?: {
+    nodes: MenuItem[];
+  };
 }
 
 export interface GetMenuResponse {

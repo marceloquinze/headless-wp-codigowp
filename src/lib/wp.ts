@@ -86,6 +86,8 @@ export async function getMenu(slug: string): Promise<GetMenuResponse> {
           nodes {
             label
             uri
+            databaseId
+            parentDatabaseId
           }
         }
       }
