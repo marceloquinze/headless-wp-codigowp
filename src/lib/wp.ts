@@ -8,6 +8,8 @@ import {
   PaginatedPosts,
   CreateCommentInput,
   GetCursosResponse,
+  SiteSettings,
+  RawSiteSettingsResponse,
 } from "@/types/wp";
 
 const endpoint = process.env.NEXT_PUBLIC_WORDPRESS_API_URL as string;
@@ -17,6 +19,29 @@ export const wpClient = new GraphQLClient(endpoint);
 
 // Get one by one and give specific data only to the requesting component
 // Helps handling cache
+
+// Get Customizer data
+export async function getSiteSettings(): Promise<SiteSettings> {
+  const query = gql`
+    query siteSettings {
+      themeSettings {
+        siteLogo {
+          sourceUrl
+          altText
+          mediaDetails {
+            height
+            width
+          }
+        }
+        numAlunos
+      }
+    }
+  `;
+
+  const rawData = await wpClient.request<RawSiteSettingsResponse>(query);
+
+  return rawData.themeSettings;
+}
 
 // Get only courses data
 export async function getCursos(): Promise<GetCursosResponse> {

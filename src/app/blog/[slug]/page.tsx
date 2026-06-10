@@ -97,9 +97,9 @@ export default async function PostPage({ params }: PostPageProps) {
             submitAction={handleCommentSubmit}
           />
         </div>
-        <div className="w-full md:w-1/4">
+        <aside className="w-full md:w-1/4">
           <Sidebar />
-        </div>
+        </aside>
       </div>
     </main>
   );

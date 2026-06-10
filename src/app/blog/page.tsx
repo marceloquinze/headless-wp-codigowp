@@ -75,9 +75,9 @@ export default async function Blog() {
             </article>
           ))}
         </div>
-        <div className="w-full md:w-1/4">
+        <aside className="w-full md:w-1/4">
           <Sidebar />
-        </div>
+        </aside>
       </div>
 
       <Pagination currentPage={currentPage} totalPages={totalPages} />

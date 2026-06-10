@@ -1,3 +1,22 @@
+// Customizer
+// What I want...
+export interface SiteSettings {
+  siteLogo?: {
+    sourceUrl: string;
+    altText: string | "";
+    mediaDetails: {
+      height: number;
+      width: number;
+    };
+  };
+  numAlunos: number;
+}
+
+// How the API responds...
+export interface RawSiteSettingsResponse {
+  themeSettings: SiteSettings;
+}
+
 // 1 Cursos
 export interface RawCurso {
   title: string;
