@@ -1,7 +1,11 @@
 import Link from "next/link";
+import { getMenu } from "@/lib/wp";
 import { MenuItem } from "@/types/wp";
 
-export default function MobileMenu({ menuItems }: { menuItems: MenuItem[] }) {
+export default async function MobileMenu() {
+  const data = await getMenu("main-menu");
+  const menuItems: MenuItem[] = data?.menu?.menuItems?.nodes || [];
+
   const buildMenu = (
     menuItems: MenuItem[],
     parentId: number = 0,

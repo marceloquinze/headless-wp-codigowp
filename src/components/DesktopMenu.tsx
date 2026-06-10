@@ -1,11 +1,11 @@
 import Link from "next/link";
+import { getMenu } from "@/lib/wp";
 import { MenuItem } from "@/types/wp";
 
-export default async function DesktopMenu({
-  menuItems,
-}: {
-  menuItems: MenuItem[];
-}) {
+export default async function DesktopMenu() {
+  const data = await getMenu("main-menu");
+  const menuItems: MenuItem[] = data?.menu?.menuItems?.nodes || [];
+
   const buildMenu = (parentId: number | 0, level = 0) => {
     const currentLevelItems = menuItems.filter((mn) => {
       return mn.parentDatabaseId === parentId;
