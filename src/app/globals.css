@@ -20,6 +20,7 @@
   --color-main-gray-900: #0a0a0a;
   --color-primary: #4a0b6b;
   --color-primary-rgb: rgb(164 35 234 / .75);
+  --color-primary-rgb2: #ffffffa8;
   --color-secondary: #4ba9f9;
   --color-tertiary: #d75656;
   --color-quaternary: #b9b928;
@@ -96,11 +97,11 @@ h4{
 
 /* Post Meta Info */
 .post-meta-info {
-  @apply flex items-center gap-6 
+  @apply flex flex-col md:flex-row items-center md:gap-6 
 }
 
 .post-meta-info .box {
-  @apply flex flex-col justify-center h-20 gap-1 border-r-1 border-main-gray-300 pr-6 last:border-0
+  @apply w-full md:w-50 flex flex-col justify-center h-20 gap-1 md:border-r-1 border-main-gray-300 pr-6 last:border-0
 }
 
 .post-meta-info .title {
@@ -110,6 +111,27 @@ h4{
 .post-meta-info .description {
   @apply font-sans font-light uppercase text-main-gray-800 text-sm
 }
+
+/* Blog Page */
+
+.blog article .meta-data {
+  @apply order-0 md:order-1
+}
+
+.blog article .blog-image {
+  @apply order-1 md:order-0
+}
+
+.blog article .excerpt {
+  @apply order-2 md:order-3
+}
+
+.blog .post-meta-info {
+  @apply order-3 md:order-2
+}
+
+
+
 
 /* Post Content */
 

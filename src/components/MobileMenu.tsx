@@ -24,7 +24,7 @@ export default function MobileMenu({ menuItems }: { menuItems: MenuItem[] }) {
             <li key={item.databaseId}>
               {hasChildren ? (
                 <details>
-                  <summary className="flex gap-2 items-center justify-between cursor-pointer list-none px-4 py-2 text-gray-600 hover:bg-gray-50">
+                  <summary className="flex gap-2 items-center justify-between cursor-pointer list-none px-4 py-2 uppercase font-bold text-gray-600 hover:bg-gray-50">
                     {item.label}
                     {hasChildren && (
                       <svg
@@ -49,7 +49,7 @@ export default function MobileMenu({ menuItems }: { menuItems: MenuItem[] }) {
               ) : (
                 <Link
                   href={item.uri}
-                  className="block px-4 py-2 text-gray-600 hover:bg-gray-50 hover:text-blue-600 transition"
+                  className="block px-4 py-2 text-gray-600 hover:bg-gray-50 hover:text-blue-600 uppercase font-bold transition"
                 >
                   {item.label}
                 </Link>

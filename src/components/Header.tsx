@@ -20,7 +20,7 @@ export default async function Header() {
         className={`${
           level === 0
             ? "flex gap-3"
-            : "absolute left-0 top-full min-w-max bg-white shadow-lg rounded-md py-2"
+            : "absolute left-0 top-0 min-w-max bg-white shadow-lg rounded-md py-2"
         }`}
       >
         {currentLevelItems.map((item) => {
@@ -35,7 +35,7 @@ export default async function Header() {
             >
               <Link
                 href={item.uri}
-                className={`flex items-center gap-2 py-2 px-3 text-gray-600 hover:text-blue-600 transition 
+                className={`flex items-center gap-2 py-2 px-3 text-gray-600 hover:text-blue-600 uppercase font-bold transition 
                   ${level > 0 ? "hover:bg-gray-50" : ""}`}
               >
                 {item.label}
@@ -71,7 +71,7 @@ export default async function Header() {
   };
 
   return (
-    <header className="bg-white sticky top-0 z-50">
+    <header className="bg-white sticky top-0 z-50 py-3">
       <nav className="max-w-7xl mx-auto px-6 h-auto md:h-16 flex items-center justify-between flex-col md:flex-row gap-2">
         <Link href="/" className="font-bold text-2xl text-blue-600">
           CódigoWP

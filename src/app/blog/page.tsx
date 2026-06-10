@@ -37,7 +37,7 @@ export default async function Blog() {
               <Link
                 href={`/blog/${post.slug}`}
                 key={post.slug}
-                className="hover:no-underline"
+                className="hover:no-underline blog-image"
               >
                 {post.featuredImage && (
                   <div className="relative w-full h-96 mb-4 overflow-hidden rounded-xl">
@@ -47,7 +47,7 @@ export default async function Blog() {
                       fill
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 50vw"
                       priority={true}
-                      className="object-cover"
+                      className="object-cover w-full"
                     />
                   </div>
                 )}
