@@ -92,7 +92,7 @@ h4{
 }
 
 .full-date {
-  @apply flex flex-col items-center justify-center text-quaternary rounded-md w-16 shrink-0
+  @apply flex flex-col items-center justify-center text-quaternary shrink-0
 }
 
 /* Post Meta Info */
