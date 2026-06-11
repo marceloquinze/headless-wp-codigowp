@@ -3,18 +3,24 @@
 export interface SiteSettings {
   siteLogo?: {
     sourceUrl: string;
-    altText: string | "";
+    altText: string;
     mediaDetails: {
       height: number;
       width: number;
     };
   };
+  // Course data
   numAlunos: number;
   numPaises: number;
   numAvaliacoes: number;
   numDuvidas: number;
   subtituloCursos: string;
   tituloCursos: string;
+  // About Me
+  textoSobreMim: string;
+  tituloBotaoSobreMim: string;
+  linkBotaoSobreMim: string;
+  imagemSobreMim: string;
 }
 
 // How the API responds...

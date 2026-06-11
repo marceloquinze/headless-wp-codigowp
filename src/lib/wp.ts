@@ -39,13 +39,30 @@ export async function getSiteSettings(): Promise<SiteSettings> {
         numDuvidas
         subtituloCursos
         tituloCursos
+        textoSobreMim
+        tituloBotaoSobreMim
+        linkBotaoSobreMim
+        imagemSobreMim
       }
     }
   `;
 
   const rawData = await wpClient.request<RawSiteSettingsResponse>(query);
 
-  return rawData.themeSettings;
+  // centers the data treatment here so we don't need to do it in types file or components
+  return {
+    siteLogo: rawData.themeSettings.siteLogo || undefined,
+    numAlunos: rawData.themeSettings.numAlunos ?? 0,
+    numPaises: rawData.themeSettings.numPaises ?? 0,
+    numAvaliacoes: rawData.themeSettings.numAvaliacoes ?? 0,
+    numDuvidas: rawData.themeSettings.numDuvidas ?? 0,
+    subtituloCursos: rawData.themeSettings.subtituloCursos || "",
+    tituloCursos: rawData.themeSettings.tituloCursos || "",
+    textoSobreMim: rawData.themeSettings.textoSobreMim || "",
+    tituloBotaoSobreMim: rawData.themeSettings.tituloBotaoSobreMim || "",
+    linkBotaoSobreMim: rawData.themeSettings.linkBotaoSobreMim || "",
+    imagemSobreMim: rawData.themeSettings.imagemSobreMim || "",
+  };
 }
 
 // Get only courses data

@@ -1,5 +1,6 @@
 import CourseCard from "@/components/CourseCard";
-import MyMetrics from "@/components/MyMetrics";
+import AboutMe from "@/components/Home/AboutMe";
+import MyMetrics from "@/components/Home/MyMetrics";
 import { getCursos, getSiteSettings } from "@/lib/wp";
 
 export default async function HomePage() {
@@ -11,14 +12,18 @@ export default async function HomePage() {
     numPaises,
     numAvaliacoes,
     numDuvidas,
+    textoSobreMim,
+    tituloBotaoSobreMim,
+    linkBotaoSobreMim,
+    imagemSobreMim,
   } = await getSiteSettings();
 
   return (
     <main className="homepage">
-      <div className="flex flex-col gap-2 mb-8 title">
-        <h1 className="text-3xl text-center font-serif font-bold text-gray-950">
+      <div className="flex flex-col gap-2 title">
+        <h2 className="text-3xl text-center font-serif font-bold text-gray-950">
           {tituloCursos}
-        </h1>
+        </h2>
         <p className="text-sm font-sans font-normal text-gray-400 text-center">
           {subtituloCursos}
         </p>
@@ -29,6 +34,12 @@ export default async function HomePage() {
         numPaises={numPaises}
         numAvaliacoes={numAvaliacoes}
         numDuvidas={numDuvidas}
+      />
+      <AboutMe
+        textoSobreMim={textoSobreMim}
+        linkBotaoSobreMim={linkBotaoSobreMim}
+        tituloBotaoSobreMim={tituloBotaoSobreMim}
+        imagemSobreMim={imagemSobreMim}
       />
     </main>
   );
