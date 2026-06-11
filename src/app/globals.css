@@ -18,7 +18,8 @@
   --color-main-gray-700: #111111;
   --color-main-gray-800: #1b1b1b;
   --color-main-gray-900: #0a0a0a;
-  --color-primary: #4a0b6b;
+  --color-primary: #4a0b6b; /* Purple */
+  --color-primary2: #332048;
   --color-primary-rgb: rgb(164 35 234 / .75);
   --color-primary-rgb2: #ffffffa8;
   --color-secondary: #4ba9f9;
@@ -36,6 +37,10 @@
 
 body {
   background: var(--background);
+}
+
+.container {
+  @apply py-14 px-10 max-w-7xl mx-auto
 }
 
 h1{

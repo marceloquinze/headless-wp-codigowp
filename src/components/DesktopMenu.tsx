@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { getMenu } from "@/lib/wp";
 import { MenuItem } from "@/types/wp";
+import Link from "next/link";
 
 export default async function DesktopMenu() {
   const data = await getMenu("main-menu");

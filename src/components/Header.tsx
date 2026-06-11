@@ -1,5 +1,5 @@
-import MobileMenu from "./MobileMenu";
 import DesktopMenu from "./DesktopMenu";
+import MobileMenu from "./MobileMenu";
 import SiteLogo from "./SiteLogo";
 
 export default function Header() {

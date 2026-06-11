@@ -34,6 +34,11 @@ export async function getSiteSettings(): Promise<SiteSettings> {
           }
         }
         numAlunos
+        numPaises
+        numAvaliacoes
+        numDuvidas
+        subtituloCursos
+        tituloCursos
       }
     }
   `;

@@ -10,6 +10,11 @@ export interface SiteSettings {
     };
   };
   numAlunos: number;
+  numPaises: number;
+  numAvaliacoes: number;
+  numDuvidas: number;
+  subtituloCursos: string;
+  tituloCursos: string;
 }
 
 // How the API responds...
