@@ -21,6 +21,10 @@ export interface SiteSettings {
   tituloBotaoSobreMim: string;
   linkBotaoSobreMim: string;
   imagemSobreMim: string;
+  // Vantagens
+  tituloVantagens: string;
+  subtituloVantagens: string;
+  vantagensList: string[];
 }
 
 // How the API responds...

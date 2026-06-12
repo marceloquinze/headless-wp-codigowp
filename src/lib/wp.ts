@@ -43,6 +43,9 @@ export async function getSiteSettings(): Promise<SiteSettings> {
         tituloBotaoSobreMim
         linkBotaoSobreMim
         imagemSobreMim
+        tituloVantagens
+        subtituloVantagens
+        vantagensList
       }
     }
   `;
@@ -62,6 +65,9 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     tituloBotaoSobreMim: rawData.themeSettings.tituloBotaoSobreMim || "",
     linkBotaoSobreMim: rawData.themeSettings.linkBotaoSobreMim || "",
     imagemSobreMim: rawData.themeSettings.imagemSobreMim || "",
+    tituloVantagens: rawData.themeSettings.tituloVantagens || "",
+    subtituloVantagens: rawData.themeSettings.subtituloVantagens || "",
+    vantagensList: rawData.themeSettings.vantagensList || [],
   };
 }
 

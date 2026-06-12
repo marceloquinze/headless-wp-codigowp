@@ -1,5 +1,6 @@
 import CourseCard from "@/components/CourseCard";
 import AboutMe from "@/components/Home/AboutMe";
+import Advantages from "@/components/Home/Advantages";
 import MyMetrics from "@/components/Home/MyMetrics";
 import { getCursos, getSiteSettings } from "@/lib/wp";
 
@@ -16,6 +17,9 @@ export default async function HomePage() {
     tituloBotaoSobreMim,
     linkBotaoSobreMim,
     imagemSobreMim,
+    tituloVantagens,
+    subtituloVantagens,
+    vantagensList,
   } = await getSiteSettings();
 
   return (
@@ -40,6 +44,11 @@ export default async function HomePage() {
         linkBotaoSobreMim={linkBotaoSobreMim}
         tituloBotaoSobreMim={tituloBotaoSobreMim}
         imagemSobreMim={imagemSobreMim}
+      />
+      <Advantages
+        tituloVantagens={tituloVantagens}
+        subtituloVantagens={subtituloVantagens}
+        vantagensList={vantagensList}
       />
     </main>
   );

@@ -71,6 +71,12 @@ h4{
     opacity: 0.7;
 }
 
+.vantagens-list i {
+  font-size: 48px;
+  line-height: 48px;
+  margin: 25px 0;
+}
+
 /* Components */
 
 /* Courses Card */
