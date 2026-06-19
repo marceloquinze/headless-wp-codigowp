@@ -81,6 +81,36 @@ export interface GetCursosResponse {
   cursos: CleanCurso[];
 }
 
+// Depoimemtos
+
+export interface RawDepoimento {
+  title: string;
+  slug: string;
+  content: string;
+  featuredImage?: {
+    node: { sourceUrl: string };
+  };
+  codigowpDestaque: string;
+}
+
+export interface RawGetDepoimentosResponse {
+  depoimentos: {
+    nodes: RawDepoimento[];
+  };
+}
+
+export interface CleanDepoimento {
+  title: string;
+  slug: string;
+  content: string;
+  featuredImage: string | null;
+  isFeatured: string;
+}
+
+export interface GetDepoimentosResponse {
+  depoimentos: CleanDepoimento[];
+}
+
 // 2 Menus
 export interface MenuItem {
   label: string;

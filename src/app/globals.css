@@ -22,9 +22,10 @@
   --color-primary2: #332048;
   --color-primary-rgb: rgb(164 35 234 / .75);
   --color-primary-rgb2: #ffffffa8;
-  --color-secondary: #4ba9f9;
-  --color-tertiary: #d75656;
-  --color-quaternary: #b9b928;
+  --color-secondary: #4ba9f9; /* Blue */
+  --color-tertiary: #d75656; /* Red */ 
+  --color-quaternary: #b9b928; /* Yellow */
+  --color-quaternary2: rgb(214 214 4 / 14%);
 }
 
 @media (prefers-color-scheme: dark) {

@@ -2,7 +2,8 @@ import CourseCard from "@/components/CourseCard";
 import AboutMe from "@/components/Home/AboutMe";
 import Advantages from "@/components/Home/Advantages";
 import MyMetrics from "@/components/Home/MyMetrics";
-import { getCursos, getSiteSettings } from "@/lib/wp";
+import Testimonials from "@/components/Home/Testimonials";
+import { getCursos, getSiteSettings, getDepoimentos } from "@/lib/wp";
 
 export default async function HomePage() {
   const coursedata = await getCursos();
@@ -22,6 +23,9 @@ export default async function HomePage() {
     vantagensList,
   } = await getSiteSettings();
 
+  const { depoimentos } = await getDepoimentos();
+  //console.log(depoimentos);
+
   return (
     <main className="homepage">
       <div className="flex flex-col gap-2 title">
@@ -39,6 +43,7 @@ export default async function HomePage() {
         numAvaliacoes={numAvaliacoes}
         numDuvidas={numDuvidas}
       />
+      <Testimonials depoimentos={depoimentos} />
       <AboutMe
         textoSobreMim={textoSobreMim}
         linkBotaoSobreMim={linkBotaoSobreMim}

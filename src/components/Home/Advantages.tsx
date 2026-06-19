@@ -1,5 +1,6 @@
 import parse from "html-react-parser";
 import DOMPurify from "isomorphic-dompurify";
+import HomeButton from "./HomeButton";
 
 interface AdvantagesProps {
   tituloVantagens: string;

@@ -10,6 +10,8 @@ import {
   GetCursosResponse,
   SiteSettings,
   RawSiteSettingsResponse,
+  GetDepoimentosResponse,
+  RawGetDepoimentosResponse,
 } from "@/types/wp";
 
 const endpoint = process.env.NEXT_PUBLIC_WORDPRESS_API_URL as string;
@@ -68,6 +70,39 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     tituloVantagens: rawData.themeSettings.tituloVantagens || "",
     subtituloVantagens: rawData.themeSettings.subtituloVantagens || "",
     vantagensList: rawData.themeSettings.vantagensList || [],
+  };
+}
+
+export async function getDepoimentos(): Promise<GetDepoimentosResponse> {
+  const query = gql`
+    query depoimentos {
+      depoimentos(first: 100) {
+        nodes {
+          codigowpDestaque
+          content
+          featuredImage {
+            node {
+              sourceUrl
+            }
+          }
+          slug
+          title
+        }
+      }
+    }
+  `;
+
+  const data = await wpClient.request<RawGetDepoimentosResponse>(query);
+  const depoimentos = data.depoimentos.nodes.map((depoimento) => ({
+    isFeatured: depoimento.codigowpDestaque,
+    content: depoimento.content,
+    featuredImage: depoimento.featuredImage?.node.sourceUrl || null,
+    slug: depoimento.slug,
+    title: depoimento.title,
+  }));
+
+  return {
+    depoimentos,
   };
 }
 
