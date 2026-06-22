@@ -2,19 +2,34 @@ import parse from "html-react-parser";
 import DOMPurify from "isomorphic-dompurify";
 import { CleanDepoimento } from "@/types/wp";
 import Image from "next/image";
+import HomeButton from "./HomeButton";
 
 interface TestimonialsProps {
   depoimentos: CleanDepoimento[];
+  tituloBotaoDepoimentos: string;
+  linkBotaoDepoimentos: string;
+  tituloDepoimentos: string;
+  subtituloDepoimentos: string;
 }
 
-export default function Testimonials({ depoimentos }: TestimonialsProps) {
+export default function Testimonials({
+  depoimentos,
+  tituloBotaoDepoimentos,
+  linkBotaoDepoimentos,
+  tituloDepoimentos,
+  subtituloDepoimentos,
+}: TestimonialsProps) {
   console.log(depoimentos);
 
   return (
     <section className="testimonials">
       <div className="vantagens-wrapper py-4">
-        <div className="container">
-          <h2 className="text-center mb-4">Depoimentos</h2>
+        <div className="container flex flex-col gap-8">
+          <div className="cabecalho mb-5 text-center">
+            <h2 className="main-title">{tituloDepoimentos}</h2>
+            <p className="main-subtitle mb-3">{subtituloDepoimentos}</p>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 justify-items-center">
             {depoimentos.map((depoimento) => {
               const isFeatured = depoimento.isFeatured === "1";
@@ -55,6 +70,10 @@ export default function Testimonials({ depoimentos }: TestimonialsProps) {
               );
             })}
           </div>
+          <HomeButton
+            link={linkBotaoDepoimentos}
+            label={tituloBotaoDepoimentos}
+          />
         </div>
       </div>
     </section>

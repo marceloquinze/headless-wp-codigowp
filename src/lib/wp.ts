@@ -48,6 +48,10 @@ export async function getSiteSettings(): Promise<SiteSettings> {
         tituloVantagens
         subtituloVantagens
         vantagensList
+        tituloDepoimentos
+        subtituloDepoimentos
+        tituloBotaoDepoimentos
+        linkBotaoDepoimentos
       }
     }
   `;
@@ -70,13 +74,17 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     tituloVantagens: rawData.themeSettings.tituloVantagens || "",
     subtituloVantagens: rawData.themeSettings.subtituloVantagens || "",
     vantagensList: rawData.themeSettings.vantagensList || [],
+    tituloDepoimentos: rawData.themeSettings.tituloDepoimentos || "",
+    subtituloDepoimentos: rawData.themeSettings.subtituloDepoimentos || "",
+    tituloBotaoDepoimentos: rawData.themeSettings.tituloBotaoDepoimentos || "",
+    linkBotaoDepoimentos: rawData.themeSettings.linkBotaoDepoimentos || "",
   };
 }
 
 export async function getDepoimentos(): Promise<GetDepoimentosResponse> {
   const query = gql`
     query depoimentos {
-      depoimentos(first: 100) {
+      depoimentos(first: 100, where: { orderby: { field: DATE, order: ASC } }) {
         nodes {
           codigowpDestaque
           content

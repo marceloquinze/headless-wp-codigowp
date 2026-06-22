@@ -25,6 +25,11 @@ export interface SiteSettings {
   tituloVantagens: string;
   subtituloVantagens: string;
   vantagensList: string[];
+  // Depoimentos
+  tituloDepoimentos: string;
+  subtituloDepoimentos: string;
+  tituloBotaoDepoimentos: string;
+  linkBotaoDepoimentos: string;
 }
 
 // How the API responds...

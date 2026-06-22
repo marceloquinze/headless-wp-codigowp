@@ -21,6 +21,10 @@ export default async function HomePage() {
     tituloVantagens,
     subtituloVantagens,
     vantagensList,
+    tituloDepoimentos,
+    subtituloDepoimentos,
+    tituloBotaoDepoimentos,
+    linkBotaoDepoimentos,
   } = await getSiteSettings();
 
   const { depoimentos } = await getDepoimentos();
@@ -43,7 +47,13 @@ export default async function HomePage() {
         numAvaliacoes={numAvaliacoes}
         numDuvidas={numDuvidas}
       />
-      <Testimonials depoimentos={depoimentos} />
+      <Testimonials
+        depoimentos={depoimentos}
+        tituloDepoimentos={tituloDepoimentos}
+        subtituloDepoimentos={subtituloDepoimentos}
+        tituloBotaoDepoimentos={tituloBotaoDepoimentos}
+        linkBotaoDepoimentos={linkBotaoDepoimentos}
+      />
       <AboutMe
         textoSobreMim={textoSobreMim}
         linkBotaoSobreMim={linkBotaoSobreMim}
