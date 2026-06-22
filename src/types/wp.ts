@@ -30,6 +30,17 @@ export interface SiteSettings {
   subtituloDepoimentos: string;
   tituloBotaoDepoimentos: string;
   linkBotaoDepoimentos: string;
+  // Destaque
+  textoDestaque: string;
+  tituloBotaoDestaque: string;
+  linkBotaoDestaque: string;
+  imagemDestaque: {
+    alt: string;
+    height: number;
+    width: number;
+    url: string;
+  };
+  imagemDestaqueFundo: string;
 }
 
 // How the API responds...

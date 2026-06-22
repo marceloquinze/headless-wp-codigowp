@@ -1,6 +1,7 @@
 import CourseCard from "@/components/CourseCard";
 import AboutMe from "@/components/Home/AboutMe";
 import Advantages from "@/components/Home/Advantages";
+import Highlights from "@/components/Home/Highlights";
 import MyMetrics from "@/components/Home/MyMetrics";
 import Testimonials from "@/components/Home/Testimonials";
 import { getCursos, getSiteSettings, getDepoimentos } from "@/lib/wp";
@@ -25,6 +26,11 @@ export default async function HomePage() {
     subtituloDepoimentos,
     tituloBotaoDepoimentos,
     linkBotaoDepoimentos,
+    textoDestaque,
+    tituloBotaoDestaque,
+    linkBotaoDestaque,
+    imagemDestaque,
+    imagemDestaqueFundo,
   } = await getSiteSettings();
 
   const { depoimentos } = await getDepoimentos();
@@ -64,6 +70,13 @@ export default async function HomePage() {
         tituloVantagens={tituloVantagens}
         subtituloVantagens={subtituloVantagens}
         vantagensList={vantagensList}
+      />
+      <Highlights
+        textoDestaque={textoDestaque}
+        tituloBotaoDestaque={tituloBotaoDestaque}
+        linkBotaoDestaque={linkBotaoDestaque}
+        imagemDestaque={imagemDestaque}
+        imagemDestaqueFundo={imagemDestaqueFundo}
       />
     </main>
   );

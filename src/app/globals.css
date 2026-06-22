@@ -65,7 +65,8 @@ h4{
   @apply font-sans break-words mb-6 antialiased;
 }
 
-.about-me::after {
+.about-me::after,
+.highlights::after {
     content: "";
     @apply block w-full h-full absolute left-0 top-0 bg-black/50 z-0;
     background-image: linear-gradient(to right, #d6d604, #a423ea);
@@ -77,6 +78,11 @@ h4{
   line-height: 48px;
   margin: 25px 0;
 }
+
+.highlights .content a {
+  @apply text-secondary
+}
+
 
 /* Components */
 

@@ -52,6 +52,16 @@ export async function getSiteSettings(): Promise<SiteSettings> {
         subtituloDepoimentos
         tituloBotaoDepoimentos
         linkBotaoDepoimentos
+        textoDestaque
+        tituloBotaoDestaque
+        linkBotaoDestaque
+        imagemDestaque {
+          alt
+          height
+          url
+          width
+        }
+        imagemDestaqueFundo
       }
     }
   `;
@@ -78,6 +88,11 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     subtituloDepoimentos: rawData.themeSettings.subtituloDepoimentos || "",
     tituloBotaoDepoimentos: rawData.themeSettings.tituloBotaoDepoimentos || "",
     linkBotaoDepoimentos: rawData.themeSettings.linkBotaoDepoimentos || "",
+    textoDestaque: rawData.themeSettings.textoDestaque || "",
+    tituloBotaoDestaque: rawData.themeSettings.tituloBotaoDestaque || "",
+    linkBotaoDestaque: rawData.themeSettings.linkBotaoDestaque || "",
+    imagemDestaque: rawData.themeSettings.imagemDestaque || "",
+    imagemDestaqueFundo: rawData.themeSettings.imagemDestaqueFundo || "",
   };
 }
 
