@@ -60,7 +60,7 @@ export default async function ListVideos() {
             </article>
           ))}
         </div>
-        <HomeButton link="/videos" label="Mais vídeos" />
+        <HomeButton link="/tutoriais-em-video" label="Mais vídeos" />
       </div>
     </section>
   );

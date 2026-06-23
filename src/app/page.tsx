@@ -61,6 +61,7 @@ export default async function HomePage() {
         subtituloDepoimentos={subtituloDepoimentos}
         tituloBotaoDepoimentos={tituloBotaoDepoimentos}
         linkBotaoDepoimentos={linkBotaoDepoimentos}
+        isHome
       />
       <AboutMe
         textoSobreMim={textoSobreMim}
