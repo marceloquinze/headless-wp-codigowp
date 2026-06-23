@@ -3,14 +3,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import HomeButton from "./HomeButton";
 
 export default async function ListBlog() {
   const { posts } = await getPosts(1, 3);
 
   return (
     <section className="blog-home bg-black">
-      <div className="container">
-        <div className="cabecalho mb-5 text-center">
+      <div className="container flex flex-col gap-8">
+        <div className="cabecalho text-center">
           <h2 className="main-title text-white">Dicas e Tutoriais WordPress</h2>
           <p className="main-subtitle text-main-gray-400">
             Dicas valiosas para o seu aprendizado WordPress
@@ -61,6 +62,7 @@ export default async function ListBlog() {
             );
           })}
         </div>
+        <HomeButton link="/blog" label="Mais dicas" />
       </div>
     </section>
   );

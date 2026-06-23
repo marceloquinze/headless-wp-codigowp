@@ -127,6 +127,29 @@ export interface GetDepoimentosResponse {
   depoimentos: CleanDepoimento[];
 }
 
+// Videos
+export interface RawVideo {
+  title: string;
+  slug: string;
+  content: string;
+}
+
+export interface RawGetVideosResponse {
+  videos: {
+    nodes: RawVideo[];
+  };
+}
+
+export interface CleanVideo {
+  title: string;
+  slug: string;
+  content: string;
+}
+
+export interface GetVideosResponse {
+  videos: CleanVideo[];
+}
+
 // 2 Menus
 export interface MenuItem {
   label: string;

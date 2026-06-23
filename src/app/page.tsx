@@ -3,6 +3,7 @@ import AboutMe from "@/components/Home/AboutMe";
 import Advantages from "@/components/Home/Advantages";
 import Highlights from "@/components/Home/Highlights";
 import ListBlog from "@/components/Home/ListBlog";
+import ListVideos from "@/components/Home/ListVideos";
 import MyMetrics from "@/components/Home/MyMetrics";
 import Testimonials from "@/components/Home/Testimonials";
 import { getCursos, getSiteSettings, getDepoimentos } from "@/lib/wp";
@@ -80,6 +81,7 @@ export default async function HomePage() {
         imagemDestaqueFundo={imagemDestaqueFundo}
       />
       <ListBlog />
+      <ListVideos />
     </main>
   );
 }

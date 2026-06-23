@@ -84,6 +84,13 @@ h4{
   @apply text-secondary
 }
 
+.post .video-wrapper iframe {
+  width: 100% !important;
+  height: 100% !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 
 /* Components */
 

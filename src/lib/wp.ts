@@ -12,6 +12,8 @@ import {
   RawSiteSettingsResponse,
   GetDepoimentosResponse,
   RawGetDepoimentosResponse,
+  GetVideosResponse,
+  RawGetVideosResponse,
 } from "@/types/wp";
 
 const endpoint = process.env.NEXT_PUBLIC_WORDPRESS_API_URL as string;
@@ -126,6 +128,32 @@ export async function getDepoimentos(): Promise<GetDepoimentosResponse> {
 
   return {
     depoimentos,
+  };
+}
+
+// Get Videos
+export async function getVideos(): Promise<GetVideosResponse> {
+  const query = gql`
+    query videos {
+      videos(first: 3) {
+        nodes {
+          title
+          slug
+          content
+        }
+      }
+    }
+  `;
+
+  const data = await wpClient.request<RawGetVideosResponse>(query);
+  const videos = data.videos.nodes.map((video) => ({
+    title: video.title,
+    slug: video.slug,
+    content: video.content,
+  }));
+
+  return {
+    videos,
   };
 }
 
