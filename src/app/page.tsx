@@ -2,6 +2,7 @@ import CourseCard from "@/components/CourseCard";
 import AboutMe from "@/components/Home/AboutMe";
 import Advantages from "@/components/Home/Advantages";
 import Highlights from "@/components/Home/Highlights";
+import ListBlog from "@/components/Home/ListBlog";
 import MyMetrics from "@/components/Home/MyMetrics";
 import Testimonials from "@/components/Home/Testimonials";
 import { getCursos, getSiteSettings, getDepoimentos } from "@/lib/wp";
@@ -78,6 +79,7 @@ export default async function HomePage() {
         imagemDestaque={imagemDestaque}
         imagemDestaqueFundo={imagemDestaqueFundo}
       />
+      <ListBlog />
     </main>
   );
 }
