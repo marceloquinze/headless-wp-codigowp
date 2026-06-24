@@ -88,7 +88,11 @@ export default async function BlogSubPage({ params }: BlogSubPageProps) {
         <div className="w-1/4">Sidebar</div>
       </div>
 
-      <Pagination currentPage={currentPage} totalPages={totalPages} />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        type="blog"
+      />
     </main>
   );
 }

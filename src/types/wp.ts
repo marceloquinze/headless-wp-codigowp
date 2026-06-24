@@ -137,6 +137,11 @@ export interface RawVideo {
 export interface RawGetVideosResponse {
   videos: {
     nodes: RawVideo[];
+    pageInfo: {
+      offsetPagination: {
+        total: number;
+      };
+    };
   };
 }
 
@@ -148,6 +153,11 @@ export interface CleanVideo {
 
 export interface GetVideosResponse {
   videos: CleanVideo[];
+}
+
+export interface PaginatedVideos {
+  videos: CleanVideo[];
+  total: number;
 }
 
 // 2 Menus
@@ -261,7 +271,6 @@ export interface RawGetPostBySlugResponse {
 export interface PaginatedPosts {
   posts: CleanPost[];
   total: number;
-  hasMore: boolean;
 }
 
 // Comments Mutation

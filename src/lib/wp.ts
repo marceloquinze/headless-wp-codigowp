@@ -12,8 +12,8 @@ import {
   RawSiteSettingsResponse,
   GetDepoimentosResponse,
   RawGetDepoimentosResponse,
-  GetVideosResponse,
   RawGetVideosResponse,
+  PaginatedVideos,
 } from "@/types/wp";
 
 const endpoint = process.env.NEXT_PUBLIC_WORDPRESS_API_URL as string;
@@ -132,20 +132,34 @@ export async function getDepoimentos(): Promise<GetDepoimentosResponse> {
 }
 
 // Get Videos
-export async function getVideos(): Promise<GetVideosResponse> {
+export async function getVideos(
+  page: number = 1,
+  size: number = 6,
+): Promise<PaginatedVideos> {
+  const offset = (page - 1) * size;
+
   const query = gql`
-    query videos {
-      videos(first: 3) {
+    query videos($offset: Int!, $size: Int!) {
+      videos(where: { offsetPagination: { offset: $offset, size: $size } }) {
         nodes {
           title
           slug
           content
         }
+        pageInfo {
+          offsetPagination {
+            total
+          }
+        }
       }
     }
   `;
 
-  const data = await wpClient.request<RawGetVideosResponse>(query);
+  const data = await wpClient.request<RawGetVideosResponse>(query, {
+    offset,
+    size,
+  });
+
   const videos = data.videos.nodes.map((video) => ({
     title: video.title,
     slug: video.slug,
@@ -154,6 +168,7 @@ export async function getVideos(): Promise<GetVideosResponse> {
 
   return {
     videos,
+    total: data.videos.pageInfo.offsetPagination.total,
   };
 }
 
@@ -273,7 +288,6 @@ export async function getPosts(
         pageInfo {
           offsetPagination {
             total
-            hasMore
           }
         }
       }
@@ -304,7 +318,6 @@ export async function getPosts(
   return {
     posts,
     total: data.posts.pageInfo.offsetPagination.total,
-    hasMore: data.posts.pageInfo.offsetPagination.hasMore,
   };
 }
 

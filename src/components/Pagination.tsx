@@ -5,11 +5,13 @@ import Link from "next/link";
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
+  type: string;
 }
 
 export default function Pagination({
   currentPage,
   totalPages,
+  type,
 }: PaginationProps) {
   const prevPage = currentPage - 1;
   const nextPage = currentPage + 1;
@@ -20,7 +22,7 @@ export default function Pagination({
       {/* Botão Anterior */}
       {currentPage > 1 ? (
         <Link
-          href={prevPage === 1 ? "/blog" : `/blog/page/${prevPage}`}
+          href={prevPage === 1 ? `/${type}` : `/${type}/page/${prevPage}`}
           className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg text-sm font-medium transition cursor-pointer"
         >
           Anteriores
@@ -36,10 +38,10 @@ export default function Pagination({
       {/* Botão Próximo */}
       {hasNextPage ? (
         <Link
-          href={`/blog/page/${nextPage}`}
+          href={`/${type}/page/${nextPage}`}
           className="px-4 py-2 bg-gray-900 hover:bg-gray-800 text-white rounded-lg text-sm font-medium transition cursor-pointer"
         >
-          Próximos Posts →
+          Próximos →
         </Link>
       ) : (
         <div className="opacity-0 pointer-events-none" />

@@ -80,7 +80,11 @@ export default async function Blog() {
         </aside>
       </div>
 
-      <Pagination currentPage={currentPage} totalPages={totalPages} />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        type="blog"
+      />
     </main>
   );
 }

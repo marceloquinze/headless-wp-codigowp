@@ -36,7 +36,6 @@ export default async function HomePage() {
   } = await getSiteSettings();
 
   const { depoimentos } = await getDepoimentos();
-  //console.log(depoimentos);
 
   return (
     <main className="homepage">
