@@ -8,6 +8,7 @@ import PostMetaInfo from "@/components/PostMetaInfo";
 import Pagination from "@/components/Pagination";
 import { getPosts } from "@/lib/wp";
 import { Metadata } from "next";
+import Sidebar from "@/components/Sidebar";
 
 interface BlogSubPageProps {
   params: Promise<{
@@ -85,7 +86,9 @@ export default async function BlogSubPage({ params }: BlogSubPageProps) {
             </article>
           ))}
         </div>
-        <div className="w-1/4">Sidebar</div>
+        <aside className="w-full md:w-1/4">
+          <Sidebar />
+        </aside>
       </div>
 
       <Pagination

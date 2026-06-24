@@ -24,8 +24,8 @@ export default function CourseCard({ cursos, isNotSidebar }: CoursesProp) {
   return (
     <section className="course-cards">
       <div
-        className={`container flex flex-wrap ${
-          isNotSidebar ? "flex-col md:flex-row" : "flex-col"
+        className={`flex flex-wrap ${
+          isNotSidebar ? "container flex-col md:flex-row" : "flex-col"
         } justify-center gap-8`}
       >
         {cursos
