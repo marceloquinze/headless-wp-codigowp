@@ -14,6 +14,14 @@ import {
   RawGetDepoimentosResponse,
   RawGetVideosResponse,
   PaginatedVideos,
+  // Pages
+  RawPage,
+  RawGetPageBySlugResponse,
+  RawGetPagesResponse,
+  RawPageSlugsResponse,
+  CleanPage,
+  GetPageBySlugParams,
+  GetPagesParams,
 } from "@/types/wp";
 
 const endpoint = process.env.NEXT_PUBLIC_WORDPRESS_API_URL as string;
@@ -464,4 +472,225 @@ export async function createComment(input: {
       message: "Erro de conexão com o servidor de comentários.",
     };
   }
+}
+
+// Pages
+
+const GET_PAGE_BY_SLUG_QUERY = gql`
+  query GetPageBySlug($id: ID!, $idType: PageIdType = URI) {
+    page(id: $id, idType: $idType) {
+      databaseId
+      title
+      slug
+      content
+      date
+      modified
+      status
+      featuredImage {
+        node {
+          sourceUrl
+          altText
+          mediaDetails {
+            height
+            width
+          }
+        }
+      }
+      seo {
+        title
+        description
+        canonical
+        openGraph {
+          title
+          description
+          image {
+            sourceUrl
+          }
+        }
+      }
+      parent {
+        node {
+          databaseId
+          slug
+        }
+      }
+      children {
+        nodes {
+          databaseId
+          slug
+        }
+      }
+      template {
+        templateName
+      }
+    }
+  }
+`;
+
+const GET_PAGES_QUERY = gql`
+  query GetPages(
+    $first: Int = 100
+    $after: String = ""
+    $orderBy: PagesOrderByEnum = DATE
+    $order: OrderEnum = DESC
+  ) {
+    pages(
+      first: $first
+      after: $after
+      where: { orderby: $orderBy, order: $order }
+    ) {
+      nodes {
+        databaseId
+        title
+        slug
+        content
+        excerpt
+        date
+        modified
+        status
+        featuredImage {
+          node {
+            sourceUrl
+            altText
+            mediaDetails {
+              height
+              width
+            }
+          }
+        }
+        seo {
+          title
+          description
+          canonical
+          openGraph {
+            title
+            description
+            image {
+              sourceUrl
+            }
+          }
+        }
+      }
+      pageInfo {
+        offsetPagination {
+          total
+          hasMore
+        }
+      }
+    }
+  }
+`;
+
+const GET_PAGE_SLUGS_QUERY = gql`
+  query GetPageSlugs($first: Int = 1000) {
+    pages(first: $first) {
+      nodes {
+        slug
+      }
+    }
+  }
+`;
+
+export async function getPageBySlug(slug: string): Promise<CleanPage | null> {
+  try {
+    const data = await wpClient.request<RawGetPageBySlugResponse>(
+      GET_PAGE_BY_SLUG_QUERY,
+      { id: slug, idType: "URI" },
+    );
+
+    if (!data.page) {
+      return null;
+    }
+
+    return transformRawPageToClean(data.page);
+  } catch (error) {
+    console.error(`Erro ao buscar página com slug "${slug}":`, error);
+    return null;
+  }
+}
+
+export async function getPages({
+  first = 100,
+  after = "",
+  orderBy = "DATE",
+  order = "DESC",
+}: GetPagesParams = {}): Promise<{
+  pages: CleanPage[];
+  total: number;
+  hasMore: boolean;
+}> {
+  try {
+    const data = await wpClient.request<RawGetPagesResponse>(GET_PAGES_QUERY, {
+      first,
+      after,
+      orderBy,
+      order,
+    });
+
+    const cleanPages = data.pages.nodes.map(transformRawPageToClean);
+
+    return {
+      pages: cleanPages,
+      total: data.pages.pageInfo.offsetPagination.total,
+      hasMore: data.pages.pageInfo.offsetPagination.hasMore,
+    };
+  } catch (error) {
+    console.error("Erro ao buscar páginas:", error);
+    return {
+      pages: [],
+      total: 0,
+      hasMore: false,
+    };
+  }
+}
+
+export async function getAllPageSlugs(): Promise<string[]> {
+  try {
+    const data = await wpClient.request<RawPageSlugsResponse>(
+      GET_PAGE_SLUGS_QUERY,
+      { first: 1000 },
+    );
+
+    return data.pages.nodes
+      .map((node) => node.slug)
+      .filter((slug) => slug !== ""); // Remove slugs vazios
+  } catch (error) {
+    console.error("Erro ao buscar slugs de páginas:", error);
+    return [];
+  }
+}
+
+export function transformRawPageToClean(rawPage: RawPage): CleanPage {
+  return {
+    id: rawPage.databaseId,
+    title: rawPage.title || "",
+    slug: rawPage.slug || "",
+    content: rawPage.content || "",
+    excerpt: rawPage.excerpt || "",
+    date: rawPage.date || "",
+    modified: rawPage.modified || "",
+    status: rawPage.status || "draft",
+    featuredImage: rawPage.featuredImage?.node?.sourceUrl || null,
+    featuredImageAlt: rawPage.featuredImage?.node?.altText || null,
+    featuredImageDimensions: rawPage.featuredImage?.node?.mediaDetails
+      ? {
+          width: rawPage.featuredImage.node.mediaDetails.width,
+          height: rawPage.featuredImage.node.mediaDetails.height,
+        }
+      : null,
+    seo: rawPage.seo
+      ? {
+          title: rawPage.seo.title || rawPage.title || "",
+          description: rawPage.seo.description || "",
+          canonical: rawPage.seo.canonical || "",
+          ogTitle: rawPage.seo.openGraph?.title || rawPage.title || "",
+          ogDescription: rawPage.seo.openGraph?.description || "",
+          ogImage: rawPage.seo.openGraph?.image?.sourceUrl || null,
+        }
+      : null,
+    parentId: rawPage.parent?.node?.databaseId || null,
+    parentSlug: rawPage.parent?.node?.slug || null,
+    template: rawPage.template?.templateName || null,
+    children: rawPage.children?.nodes?.map(transformRawPageToClean) || [],
+  };
 }

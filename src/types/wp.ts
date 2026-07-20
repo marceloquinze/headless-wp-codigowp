@@ -288,3 +288,172 @@ export interface CreateCommentInput {
   author: string; // Nome do Autor
   authorEmail: string; // E-mail do Autor
 }
+
+// ============================================
+// PAGE INTERFACES
+// ============================================
+
+/**
+ * Page content coming from WordPress (RAW)
+ * Corresponds to the structure returned by the GraphQL query.
+ */
+export interface RawPage {
+  databaseId: number;
+  title: string;
+  slug: string;
+  content: string;
+  excerpt: string;
+  date: string;
+  modified: string;
+  status: string;
+  featuredImage?: {
+    node: {
+      sourceUrl: string;
+      altText: string;
+      mediaDetails: {
+        height: number;
+        width: number;
+      };
+    };
+  };
+  seo?: {
+    title: string;
+    description: string;
+    canonical: string;
+    openGraph: {
+      title: string;
+      description: string;
+      image: {
+        sourceUrl: string;
+      };
+    };
+  };
+  parent?: {
+    node: {
+      databaseId: number;
+      title: string;
+      slug: string;
+    };
+  };
+  children?: {
+    nodes: RawPage[];
+  };
+  template?: {
+    templateName: string;
+  };
+}
+
+/**
+ * Interface for a single page query response
+ */
+export interface RawGetPageBySlugResponse {
+  page: RawPage | null;
+}
+
+/**
+ * Interface for a multiple pages query response
+ */
+export interface RawGetPagesResponse {
+  pages: {
+    nodes: RawPage[];
+    pageInfo: {
+      offsetPagination: {
+        total: number;
+        hasMore: boolean;
+      };
+    };
+  };
+}
+
+/**
+ * Interface for a multiple pages query response with only slugs
+ */
+export interface RawPageSlugsResponse {
+  pages: {
+    nodes: {
+      slug: string;
+    }[];
+  };
+}
+
+// ============================================
+// CLEAN PAGES INTERFACES
+// ============================================
+
+/**
+ * Clean page interface to be used in the app (without GraphQL wrappers)
+ */
+export interface CleanPage {
+  id: number;
+  title: string;
+  slug: string;
+  content: string;
+  excerpt: string;
+  date: string;
+  modified: string;
+  status: string;
+  featuredImage: string | null;
+  featuredImageAlt: string | null;
+  featuredImageDimensions: {
+    width: number;
+    height: number;
+  } | null;
+  seo: {
+    title: string;
+    description: string;
+    canonical: string;
+    ogTitle: string;
+    ogDescription: string;
+    ogImage: string | null;
+  } | null;
+  parentId: number | null;
+  parentSlug: string | null;
+  template: string | null;
+  children: CleanPage[];
+}
+
+// ============================================
+// METADATA INTERFACES
+// ============================================
+
+/**
+ * Metadata for a page
+ */
+export interface PageMetadata {
+  title: string;
+  description: string;
+  canonical?: string;
+  openGraph?: {
+    title: string;
+    description: string;
+    images?: string[];
+  };
+  twitter?: {
+    card: string;
+    title: string;
+    description: string;
+  };
+}
+
+// ============================================
+// PARAMS INTERFACES
+// ============================================
+
+/**
+ * Params for the getPageBySlug function
+ */
+export interface GetPageBySlugParams {
+  slug: string;
+  idType?: "SLUG" | "ID" | "URI";
+}
+
+/**
+ * Params for the getPages function
+ */
+export interface GetPagesParams {
+  first?: number;
+  after?: string;
+  before?: string;
+  orderBy?: "DATE" | "TITLE" | "MODIFIED";
+  order?: "ASC" | "DESC";
+}

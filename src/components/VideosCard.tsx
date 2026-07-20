@@ -1,7 +1,6 @@
 import { CleanVideo } from "@/types/wp";
 import parse from "html-react-parser";
 import DOMPurify from "isomorphic-dompurify";
-import Link from "next/link";
 
 interface VideosCardProps {
   videos: CleanVideo[];
@@ -40,13 +39,11 @@ export default function VideosCard({ videos, isHome }: VideosCardProps) {
             )}
           </div>
           <div className="video-content">
-            <Link href={`/videos/${video.slug}`} key={video.slug}>
-              <h3
-                className={`${isHome ? "text-white" : "text-gray-950"} text-[16px]! text-center hover:text-quaternary transition`}
-              >
-                {video.title}
-              </h3>
-            </Link>
+            <h3
+              className={`${isHome ? "text-white" : "text-gray-950"} text-[16px]! text-center hover:text-quaternary transition`}
+            >
+              {video.title}
+            </h3>
           </div>
         </article>
       ))}
