@@ -496,18 +496,6 @@ const GET_PAGE_BY_SLUG_QUERY = gql`
           }
         }
       }
-      seo {
-        title
-        description
-        canonical
-        openGraph {
-          title
-          description
-          image {
-            sourceUrl
-          }
-        }
-      }
       parent {
         node {
           databaseId
